@@ -1,0 +1,16 @@
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.support.FindBy;
+
+#set($type='element')
+public class $pageclass {
+
+#foreach($f in $fields)
+#if($type == 'element')
+   @FindBy($f.getIdentifier() = "$f.getValue()")
+   private WebElement $f.getName();
+
+#end
+#end
+
+}
