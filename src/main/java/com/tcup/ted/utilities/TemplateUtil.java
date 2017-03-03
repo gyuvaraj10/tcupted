@@ -3,7 +3,8 @@ package com.tcup.ted.utilities;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.stereotype.Repository;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -13,13 +14,21 @@ import java.util.Properties;
 /**
  * Created by Yuvaraj on 22/02/2017.
  */
-@Repository
+@Service
+@Scope("prototype")
 public class TemplateUtil {
 
-    private VelocityEngine engine = new VelocityEngine();
-    private Template template = null;
-    private VelocityContext context = new VelocityContext();
-    private StringWriter writer = new StringWriter();
+    private VelocityEngine engine;
+    private Template template;
+    private VelocityContext context;
+    private StringWriter writer;
+
+    public TemplateUtil() {
+        template = null;
+        engine = new VelocityEngine();
+        context = new VelocityContext();
+        writer = new StringWriter();
+    }
 
     public void load(String filePath) throws Exception {
         engine.init(getProperties());

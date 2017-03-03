@@ -5,6 +5,10 @@ public class ElementField {
     private String identifier;
     private String value;
 
+    public ElementField(){
+
+    }
+
     private ElementField(String name, String identifier, String value){
         this.name = name;
         this.identifier = identifier;
