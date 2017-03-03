@@ -1,14 +1,11 @@
-package com.tcup.ted.identifiers;
+package com.tcup.ted.generator.identifiers;
 
-/**
- * Created by Yuvaraj on 21/02/2017.
- */
 public class ElementField {
-    public String name;
-    public String identifier;
-    public String value;
+    private String name;
+    private String identifier;
+    private String value;
 
-    public ElementField(String name, String identifier, String value){
+    private ElementField(String name, String identifier, String value){
         this.name = name;
         this.identifier = identifier;
         this.value = value;

@@ -3,6 +3,7 @@ package com.tcup.ted.utilities;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -12,6 +13,7 @@ import java.util.Properties;
 /**
  * Created by Yuvaraj on 22/02/2017.
  */
+@Repository
 public class TemplateUtil {
 
     private VelocityEngine engine = new VelocityEngine();
@@ -35,7 +37,7 @@ public class TemplateUtil {
         return writer.toString();
     }
 
-    Properties getProperties(){
+    private Properties getProperties(){
         Properties p = new Properties();
         p.setProperty("resource.loader","file");
         p.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
