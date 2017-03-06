@@ -1,8 +1,7 @@
-package com.tcup.ted.generator.impl;
+package com.tcup.ted.services.generator.impl;
 
-import com.tcup.ted.generator.IPageObjectGenerator;
-import com.tcup.ted.generator.identifiers.ElementField;
-import org.springframework.stereotype.Component;
+import com.tcup.ted.services.generator.IPageObjectGenerator;
+import com.tcup.ted.services.generator.models.ElementField;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

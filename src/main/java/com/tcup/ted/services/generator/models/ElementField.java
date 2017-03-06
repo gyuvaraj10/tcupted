@@ -1,4 +1,4 @@
-package com.tcup.ted.generator.identifiers;
+package com.tcup.ted.services.generator.models;
 
 public class ElementField {
     private String name;

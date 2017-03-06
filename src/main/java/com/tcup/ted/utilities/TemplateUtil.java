@@ -11,9 +11,6 @@ import java.io.StringWriter;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * Created by Yuvaraj on 22/02/2017.
- */
 @Service
 @Scope("prototype")
 public class TemplateUtil {

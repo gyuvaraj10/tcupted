@@ -1,8 +1,5 @@
 package com.tcup.ted.git.models;
 
-/**
- * Created by Yuvaraj on 01/03/2017.
- */
 public class Project {
 
     private String name;

@@ -1,12 +1,11 @@
 package com.tests.bootstrap;
 
 import com.google.gson.Gson;
-import com.tcup.ted.generator.identifiers.ElementField;
+import com.tcup.ted.services.generator.models.ElementField;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

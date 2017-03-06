@@ -1,6 +1,6 @@
 //package com.tests.bootstrap;
 //
-//import com.tcup.ted.generator.PageObjectProvider;
+//import com.tcup.ted.services.generator.PageObjectProvider;
 //import com.tcup.ted.git.impl.GitHubService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
-package com.tcup.ted.generator;
+package com.tcup.ted.services.generator;
 
 
-import com.tcup.ted.generator.identifiers.ElementField;
+import com.tcup.ted.services.generator.models.ElementField;
 
 import java.util.List;
 

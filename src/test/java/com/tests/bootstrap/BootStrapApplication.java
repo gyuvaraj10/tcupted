@@ -1,17 +1,8 @@
 package com.tests.bootstrap;
 
-import com.tcup.ted.configuration.TcupTedScanner;
-import com.tcup.ted.generator.IPageObjectGenerator;
-import com.tcup.ted.generator.identifiers.ElementField;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
 
 
 @EnableAsync

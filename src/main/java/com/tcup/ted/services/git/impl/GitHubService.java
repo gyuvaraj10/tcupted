@@ -3,13 +3,12 @@ package com.tcup.ted.git.impl;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tcup.ted.generator.impl.SeleniumPOGenerator;
+import com.tcup.ted.services.generator.impl.SeleniumPOGenerator;
 import com.tcup.ted.git.IGitService;
 import com.tcup.ted.git.models.Project;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.RequestException;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.util.comparator.BooleanComparator;
 import org.springframework.util.concurrent.ListenableFuture;
-
-import java.util.concurrent.Future;
 
 import static java.lang.String.format;
 

@@ -1,7 +1,7 @@
-package com.tcup.ted.generator;
+package com.tcup.ted.services.generator;
 
-import com.tcup.ted.generator.impl.AppiumPOGenerator;
-import com.tcup.ted.generator.impl.SeleniumPOGenerator;
+import com.tcup.ted.services.generator.impl.AppiumPOGenerator;
+import com.tcup.ted.services.generator.impl.SeleniumPOGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
