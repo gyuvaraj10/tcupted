@@ -6,7 +6,11 @@
 
     <groupId>tcup.ted</groupId>
     <artifactId>ted-test-tool</artifactId>
+    <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
+    <modules>
+        <module>tcupDb</module>
+    </modules>
 
     <properties>
         <apache.velocity>1.7</apache.velocity>
