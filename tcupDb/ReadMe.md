@@ -14,7 +14,7 @@ The pre-requisites are built on mac os.
 
 ## Running the shell scripts available
 Make sure you have set the executable permissions before running this script. There are 2 scripts available "create_db_server.sh", "create_db.sh"
-  a. create_db_server.sh: This script will install the server and run it in the docker contains
+  a. create_db_server.sh: This script will install the server and run it in the docker contains.
   b. create_db.sh: This script will create the database in the above created running container
 
 Tips: 
