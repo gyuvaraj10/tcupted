@@ -1,4 +1,14 @@
 # TCUP DB Documentation
+We use docker to create the postgres database server. Using the script "create_db_server.sh" will create a postgres database server running as a docker container.
+The following are the default values for the postgres database server running.
+
+DB name: postgres
+User name: tcup
+Password: tcup
+host name: localhost
+port: 5432
+
+The default database name will be "postgres" and the user will be "tcup"
 
 ## Pre-requisites for running script:
 The pre-requisites are built on mac os. 
