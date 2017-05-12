@@ -1,11 +1,16 @@
 package com.tcup.ted.controllers.genservices;
 
+import com.tcup.ted.db.entities.Pages;
+import com.tcup.ted.db.repositories.PageRepository;
 import com.tcup.ted.services.generator.PageObjectProvider;
 import com.tcup.ted.services.generator.models.ElementField;
+import com.tcup.ted.services.git.IGitService;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -19,15 +24,25 @@ public class PageController {
     private PageObjectProvider provider;
 
     @Autowired
-    private Logger logger;
+    private PageRepository pageRepository;
+
+    @Autowired
+    private IGitService gitHubService;
+
+    private static Logger logger = LoggerFactory.getLogger(PageController.class);
 
     @PostMapping("/create/{name}")
     public void createPage(@PathVariable String name, HttpEntity<List<ElementField>> entity){
         try {
             String content = provider.getObject().generatePageObject(name, entity.getBody());
-            //TODO implement the code to persist the new page information into database
-            FileUtils.writeStringToFile(new File("/Users/Yuvaraj/dev/mytoold/tcupted/src/main/resources/" + name + ".java"),
-                    content, "UTF-8");
+            File file = new File("/Users/Yuvaraj/dev/mytoold/tcupted/src/main/resources/" + name + ".java");
+            FileUtils.writeStringToFile(file, content, "UTF-8");
+            String gitContent = Base64Utils.encodeToUrlSafeString(FileUtils.readFileToString(file, "UTF-8").getBytes());
+            gitHubService.createAFile("yuvaraj", name+".java", gitContent);
+            ElementField field = entity.getBody().get(0);
+            Pages pages = new Pages("1",name, field.getIdentifier(), field.getValue(), field.getName());
+            pageRepository.save(pages);
+            logger.info("Successfully saved the Page into the Database");
         } catch (Exception ex){
             logger.error("There is a problem creating the page {}", ex.getMessage());
         }
@@ -37,7 +52,14 @@ public class PageController {
     public void updatePage(@PathVariable String name, HttpEntity<List<ElementField>> entity) {
         try {
             String content = provider.getObject().generatePageObject(name, entity.getBody());
-            //TODO implement the code to update the page information into database
+            File file = new File("/Users/Yuvaraj/dev/mytoold/tcupted/src/main/resources/" + name + ".java");
+            FileUtils.writeStringToFile(file, content, "UTF-8");
+            String gitContent = Base64Utils.encodeToUrlSafeString(FileUtils.readFileToString(file, "UTF-8").getBytes());
+            gitHubService.updateAFile("yuvaraj", name+".java", gitContent);
+            ElementField field = entity.getBody().get(0);
+            Pages pages = new Pages("1",name, field.getIdentifier(), field.getValue(), field.getName());
+            pageRepository.save(pages);
+            logger.info("Successfully saved the Page into the Database");
         } catch (Exception ex){
             logger.error("There is a problem updating the page {}", ex.getMessage());
         }

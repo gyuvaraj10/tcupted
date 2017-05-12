@@ -1,23 +1,20 @@
 package com.tcup.ted.configuration;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.egit.github.core.client.GitHubClient;
-import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @PropertySources({
         @PropertySource("classpath:application.properties")
 })
 @ComponentScan(basePackages = {"com.tcup.ted"})
-@EnableDynamoDBRepositories(basePackages = "com.tcup.ted.cloud.dynamo")
-public class TcupTedScanner {
+@EnableMongoRepositories("com.tcup.ted.db.repositories")
+public class TcupTedScanner{
 
     @Value("${amazon.dynamodb.endpoint}")
     private String amazonDynamoDBEndpoint;
@@ -29,22 +26,6 @@ public class TcupTedScanner {
     private String amazonAWSSecretKey;
 
     @Bean
-    public AmazonDynamoDB amazonDynamoDB() {
-        AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(
-                amazonAWSCredentials());
-        if (StringUtils.isNotEmpty(amazonDynamoDBEndpoint)) {
-            amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
-        }
-        return amazonDynamoDB;
-    }
-
-    @Bean
-    public AWSCredentials amazonAWSCredentials() {
-        return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
-    }
-
-
-    @Bean
     public GitHubClient getGitHubClient(){
         return new GitHubClient();
     }
@@ -54,4 +35,5 @@ public class TcupTedScanner {
     public PropertySourcesPlaceholderConfigurer getPropertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
+
 }

@@ -1,4 +1,4 @@
-package com.tcup.ted.git.models;
+package com.tcup.ted.services.git.models;
 
 public class Project {
 

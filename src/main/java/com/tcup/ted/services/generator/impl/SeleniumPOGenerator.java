@@ -19,7 +19,7 @@ public class SeleniumPOGenerator implements IPageObjectGenerator{
     @Autowired
     private TemplateUtil util;
 
-    @Value("selenium.template.path")
+    @Value("${selenium.template.path}")
     private String seleniumTemplatePath;
 
     private static Logger log4JLogger = LoggerFactory.getLogger(SeleniumPOGenerator.class);

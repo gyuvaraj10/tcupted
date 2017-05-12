@@ -34,3 +34,5 @@ Tips:
   4. To remove a created container run "docker rm <CONTAINER_ID"
     
    
+   
+http://blog.netgloo.com/2014/10/27/using-mysql-in-spring-boot-via-spring-data-jpa-and-hibernate/   

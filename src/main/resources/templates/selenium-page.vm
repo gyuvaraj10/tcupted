@@ -13,4 +13,10 @@ public class $pageclass {
 #end
 #end
 
+#foreach($method in $methods)
+   private void $method() {
+
+   }
+#end
+
 }
