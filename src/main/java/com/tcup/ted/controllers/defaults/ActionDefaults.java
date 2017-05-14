@@ -2,7 +2,6 @@ package com.tcup.ted.controllers.defaults;
 
 import com.tcup.ted.db.repositories.ActionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +20,7 @@ public class ActionDefaults {
     ActionsRepository actionsRepository;
 
     @RequestMapping(path = "/uiactions", method = RequestMethod.GET)
-    public ResponseEntity<String> getUIActions(){
-        ResponseEntity entity = new ResponseEntity(actionsRepository.findAll(), HttpStatus.ACCEPTED);
-        return entity;
+    public ResponseEntity getUIActions(){
+        return new ResponseEntity(actionsRepository.findAll(), HttpStatus.ACCEPTED);
     }
 }

@@ -13,7 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
         @PropertySource("classpath:application.properties")
 })
 @ComponentScan(basePackages = {"com.tcup.ted"})
-@EnableMongoRepositories("com.tcup.ted.db.repositories")
+@EnableMongoRepositories(basePackages = {"com.tcup.ted.db.repositories",
+        "com.tcup.ted.services.companies.repositories"})
 public class TcupTedScanner{
 
     @Value("${amazon.dynamodb.endpoint}")

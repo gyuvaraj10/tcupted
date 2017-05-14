@@ -57,9 +57,10 @@ public class TestClass12 {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register(TcupTedScanner.class);
         context.refresh();
-        Actions actions = new Actions("1","click");
+        Actions actions = new Actions("4","dragAndDrop");
         repository.save(actions);
-        Actions actions1 = repository.findByActionName("click").get(0);
-        assert actions1.getActionName().equalsIgnoreCase(actions.getActionName());
+
+//        Actions actions1 = repository.findByActionName("click").get(0);
+//        assert actions1.getActionName().equalsIgnoreCase(actions.getActionName());
     }
 }
