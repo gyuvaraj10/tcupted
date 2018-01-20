@@ -31,14 +31,12 @@ public class PageController {
 
     private static Logger logger = LoggerFactory.getLogger(PageController.class);
 
-    @PostMapping("/create/{name}")
-    public void createPage(@PathVariable String name, HttpEntity<List<ElementField>> entity){
+    @PostMapping("/create/{project}/{name}")
+    public void createPage(@PathVariable String project, @PathVariable String name, HttpEntity<List<ElementField>> entity){
         try {
             String content = provider.getObject().generatePageObject(name, entity.getBody());
-            File file = new File("/Users/Yuvaraj/dev/mytoold/tcupted/src/main/resources/" + name + ".java");
-            FileUtils.writeStringToFile(file, content, "UTF-8");
-            String gitContent = Base64Utils.encodeToUrlSafeString(FileUtils.readFileToString(file, "UTF-8").getBytes());
-            gitHubService.createAFile("yuvaraj", name+".java", gitContent);
+            String gitContent = Base64Utils.encodeToUrlSafeString(content.getBytes());
+            gitHubService.createAFile(project, name, gitContent);
             ElementField field = entity.getBody().get(0);
             Pages pages = new Pages("1",name, field.getIdentifier(), field.getValue(), field.getName());
             pageRepository.save(pages);

@@ -15,10 +15,12 @@ import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.client.GitHubRequest;
 import org.eclipse.egit.github.core.client.GitHubResponse;
 import org.eclipse.egit.github.core.client.RequestException;
+import org.eclipse.egit.github.core.service.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -33,11 +35,11 @@ import static java.lang.String.format;
 @Service
 public class GitHubService implements IGitService{
 
-    @Value("${github.api.url}")
-    private String url;
-
     @Value("${github.access.token}")
     private String token;
+
+    @Value("${github.api.url}")
+    private String url;
 
     @Value("${github.repo.owner}")
     private String owner;
@@ -57,6 +59,9 @@ public class GitHubService implements IGitService{
     @Autowired
     private GitHubClient gitHubClient;
 
+    @Autowired
+    private RepositoryService service;
+
     private static Logger log4JLogger = LoggerFactory.getLogger(SeleniumPOGenerator.class);
 
     @Override
@@ -64,17 +69,13 @@ public class GitHubService implements IGitService{
     public ListenableFuture<Repository> createProject(String projectName) throws Exception {
         Repository object = null;
         try {
-            gitHubClient.setOAuth2Token(token);
-            Project project = Project.Builder.project()
-                    .withAutoInit(false)
-                    .withPrivate(false)
-                    .withName(projectName)
-                    .build();
-            object = gitHubClient.post("/user/repos", project, Object.class);
+            Repository repository = new Repository();
+            repository.setName(projectName);
+            object = service.createRepository(repository);
             log4JLogger.info("Successfully Created A Repository for project:\n{}", getGson().toJson(object));
         }
         catch (RequestException ex){
-            //Do Nothing
+            log4JLogger.error(ex.getMessage());
         }
         return new AsyncResult<>(object);
     }
@@ -83,14 +84,12 @@ public class GitHubService implements IGitService{
     public ListenableFuture<Boolean> importProject(String projectName) throws Exception {
         Repository object = null;
         try {
-            gitHubClient.setOAuth2Token(token);
             ImportProject project = ImportProject.Builder.importProject()
                     .withVcs(vcsName)
                     .withVcs_password(password)
                     .withVcs_username(owner)
-                    .withVcs_url(format("https://github.com/%s/%s",owner, repoName))
+                    .withVcs_url(format ("https://github.com/%s/%s",owner, repoName))
                     .build();
-            gitHubClient.setHeaderAccept("application/vnd.github.barred-rock-preview");
             object = gitHubClient.put(format("/repos/%s/%s/import", owner,projectName), project, Repository.class);
             log4JLogger.info("Successfully Created A Repository for project:\n{}", getGson().toJson(object));
             return new AsyncResult<>(Boolean.TRUE);
@@ -105,14 +104,12 @@ public class GitHubService implements IGitService{
     @Async
     public ListenableFuture<Boolean> deleteProject(String projectName) throws Exception {
         try {
-            gitHubClient.setOAuth2Token(token);
             gitHubClient.delete(format("/repos/%s/%s",owner, projectName));
             log4JLogger.info("Deleting the Project {}", projectName);
             return new AsyncResult<>(Boolean.TRUE);
         }
         catch (Exception ex){
             log4JLogger.error("Failed to delete the Project due to {}", ex.getMessage());
-            //return this error as an error response
             return new AsyncResult<>(Boolean.FALSE);
         }
     }
@@ -121,12 +118,11 @@ public class GitHubService implements IGitService{
     @Async
     public ListenableFuture<Boolean> createAFile(String projectName, String filePath, String content) throws Exception {
         try{
-            gitHubClient.setOAuth2Token(token);
             Commit commit = Commit.Builder.commit()
                     .withContent(content)
                     .withMessage("Creating the page class")
                     .build();
-            filePath = projectName+"/"+pagePath+filePath;
+            filePath = pagePath+"/"+filePath+".java";
             gitHubClient.put(format("/repos/%s/%s/contents/%s", owner, projectName, filePath), commit, Object.class);
             log4JLogger.info("Created A Page Class");
             return new AsyncResult<>(Boolean.TRUE);
@@ -141,7 +137,6 @@ public class GitHubService implements IGitService{
     @Override
     public ListenableFuture<Boolean> updateAFile(String projectName, String filePath, String content) throws Exception {
         try{
-            gitHubClient.setOAuth2Token(token);
             String sha = getFileSHA(projectName, filePath);
             Commit commit = Commit.Builder.commit()
                     .withContent(content)
@@ -162,8 +157,6 @@ public class GitHubService implements IGitService{
     @Override
     public ListenableFuture<Boolean> getFile(String projectName, String filePath) throws Exception {
         try{
-            gitHubClient.setOAuth2Token(token);
-
             log4JLogger.info("Created A Page Class");
             return new AsyncResult<>(Boolean.TRUE);
         }
@@ -176,7 +169,6 @@ public class GitHubService implements IGitService{
 
     public String getFileSHA(String projectName, String filePath) throws Exception {
         try{
-            gitHubClient.setOAuth2Token(token);
             GitHubRequest request = new GitHubRequest();
             request.setUri(format("/repos/%s/%s/contents/%s", owner, projectName, filePath));
             GitHubResponse response = gitHubClient.get(request);

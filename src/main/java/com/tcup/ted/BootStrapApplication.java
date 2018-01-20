@@ -2,11 +2,12 @@ package com.tcup.ted;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
-
-//@EnableAsync
-//@EnableWebMvc
+@EnableAsync
+@EnableWebMvc
 @SpringBootApplication(scanBasePackages = {"com.tcup.ted"})
 public class BootStrapApplication {
 

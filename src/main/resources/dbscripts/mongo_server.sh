@@ -10,4 +10,4 @@ if [ $(docker images |grep $IMG_NAME |wc -l) == 1 ]
     docker pull $IMG_NAME
 fi
 echo "Running the Mongo Docker container"
-docker run --name tcupted  -d mongo
+docker run --name tcupted -p 27017:27017 -d mongo

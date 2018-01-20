@@ -18,6 +18,7 @@ if [ $(docker ps -a |grep postgres |grep $CONT_NAME| grep "Exited" |wc -l) == 1 
      docker rm /$CONT_NAME
   else
      echo "Running the postgres instance is running on your machine hence not starting it"
+     docker stop $CONT_NAME
 fi
 
 echo "Running the docker container"
@@ -27,7 +28,7 @@ echo "Docker running images are"
 docker ps|grep $CONT_NAME
 
 echo "copying the sql file into the container"
-docker cp ../dbqueries/create_schema.sql $CONT_NAME:tmp/create_schema.sql
+docker cp ../dbqueries/create_schema.sql $CONT_NAME:/tmp/create_schema.sql
 
 echo "Attempting to create the data base schemas and the tables"
-docker exec -it tcupted_db "psql --echo-all --host=127.0.0.1 --port=5432 --dbname=postgres --username=tcup -f tmp/create_schema.sql" -U tcup
+docker exec -it $CONT_NAME "psql --echo-all --host=127.0.0.1 --port=5432 --dbname=postgres --username=tcup -f /tmp/create_schema.sql" -U tcup

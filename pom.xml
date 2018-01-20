@@ -53,11 +53,6 @@
             <version>4.12</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.mylyn.github</groupId>
-            <artifactId>org.eclipse.egit.github.core</artifactId>
-            <version>LATEST</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.3</version>
@@ -88,20 +83,35 @@
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.mylyn.github</groupId>
+            <artifactId>org.eclipse.egit.github.core</artifactId>
+            <version>4.10.0.201712302008-r</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
     </dependencies>
     <repositories>
+        <repository>
+            <id>spring-repo</id>
+            <name>Spring Repository</name>
+            <url>https://repo.spring.io/release</url>
+        </repository>
         <repository>
             <id>repo</id>
             <url>https://repo.eclipse.org/content/groups/releases/</url>
         </repository>
-        <repository>
-            <id>opensourceagility-release</id>
-            <url>http://repo.opensourceagility.com/release/</url>
-        </repository>
-        <repository>
-            <id>maven</id>
-            <url>https://mvnrepository.com</url>
-        </repository>
+        <!--<repository>-->
+            <!--<id>opensourceagility-release</id>-->
+            <!--<url>http://repo.opensourceagility.com/release/</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>maven</id>-->
+            <!--<url>https://mvnrepository.com</url>-->
+        <!--</repository>-->
     </repositories>
     <build>
         <plugins>

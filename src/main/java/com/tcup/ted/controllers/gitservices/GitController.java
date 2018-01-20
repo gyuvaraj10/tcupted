@@ -110,7 +110,7 @@ public class GitController {
     }
 
     @RequestMapping(value = "/create/page", method = RequestMethod.POST)
-    public DeferredResult<ResponseEntity<Boolean>> createAPage(@RequestParam String name,
+    public DeferredResult<ResponseEntity<Boolean>> createAPage(@RequestParam String projectName,@RequestParam String name,
                                                                HttpEntity<List<ElementField>> entity) throws Exception {
         final DeferredResult<ResponseEntity<Boolean>> deferredResult = new DeferredResult<>(5000l);
         String content = entity.getBody().toString();
