@@ -1,38 +1,21 @@
 package com.tcup.ted.services.companies.model;
 
+import java.util.Arrays;
+
 public class TcupProject {
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     private String projectName;
     private String description;
 
-    public TcupProject(String projectName, String description) {
-        this.projectName = projectName;
-        this.description = description;
-    }
+    public TcupProject() {
 
-    public static class Builder {
-        private String projectName;
-        private String description;
-
-        private Builder() {
-        }
-
-        public static Builder tcupProject() {
-            return new Builder();
-        }
-
-        public Builder withProjectName(String projectName) {
-            this.projectName = projectName;
-            return this;
-        }
-
-        public Builder withDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public TcupProject build() {
-            return new TcupProject(this.projectName, this.description);
-        }
     }
 }

@@ -6,8 +6,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
-@EnableAsync
-@EnableWebMvc
 @SpringBootApplication(scanBasePackages = {"com.tcup.ted"})
 public class BootStrapApplication {
 

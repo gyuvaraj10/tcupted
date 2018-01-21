@@ -6,6 +6,8 @@ import com.tcup.ted.services.companies.repositories.TcupCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CompanyService implements ICompany {
 
@@ -21,5 +23,11 @@ public class CompanyService implements ICompany {
     @Override
     public TcupCompany getCompany(String companyName) {
         return tcupCompanyRepository.findByName(companyName).get(0);
+    }
+
+
+    @Override
+    public List<TcupCompany> getAllCompanyDetails() {
+        return tcupCompanyRepository.findAll();
     }
 }

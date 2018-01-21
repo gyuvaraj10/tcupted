@@ -1,23 +1,42 @@
 package com.tcup.ted.services.companies.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TcupCompany {
 
     private String name;
-    private String otherInformation;
-    private List<TcupProject> projectList;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setProjectList(TcupProject[] projectList) {
+        this.projectList = projectList;
+    }
+
+    private String email;
+
+    @JsonFormat(with= JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    private TcupProject[] projectList;
 
     public String getName() {
         return name;
     }
 
-    public String getOtherInformation() {
-        return otherInformation;
+    public String getEmail() {
+        return email;
     }
 
-    public List<TcupProject> getProjectList() {
+    public TcupProject[] getProjectList() {
         return projectList;
     }
 
@@ -25,49 +44,8 @@ public class TcupCompany {
 
     }
 
-    public TcupCompany(String name, String otherInformation, List<TcupProject> projects) {
-        this.name = name;
-        this.otherInformation = otherInformation;
-        this.projectList = projects;
-    }
-
-    public static class Builder {
-        private String name;
-        private String otherInformation;
-        private List<TcupProject> projectList;
-
-        private Builder() {
-        }
-
-        public static Builder tcupCompany() {
-            return new Builder();
-        }
-
-        public Builder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder withOtherInformation(String otherInformation) {
-            this.otherInformation = otherInformation;
-            return this;
-        }
-
-        public Builder withProjectList(List<TcupProject> projectList) {
-            this.projectList = projectList;
-            return this;
-        }
-
-        public Builder withProject(TcupProject tcupProject) {
-            if(this.projectList == null) {
-                this.projectList = new ArrayList<>();
-            }
-            this.projectList.add(tcupProject);
-            return this;
-        }
-
-        public TcupCompany build() {
-            return new TcupCompany(this.name, this.otherInformation, this.projectList);
-        }
+    @Override
+    public String toString() {
+        return "TcupCompany{'name='"+name+",'email'="+email+",'projectList'="+ Arrays.toString(projectList)+"}";
     }
 }

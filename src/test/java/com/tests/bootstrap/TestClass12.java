@@ -6,6 +6,7 @@ import com.tcup.ted.db.entities.Actions;
 import com.tcup.ted.db.repositories.ActionsRepository;
 import com.tcup.ted.services.generator.models.ElementField;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration;

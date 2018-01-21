@@ -93,6 +93,24 @@
             <artifactId>javax.inject</artifactId>
             <version>1</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angularjs</artifactId>
+            <version>1.6.6</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.0.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angular-ui-router</artifactId>
+            <version>1.0.3</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -104,14 +122,6 @@
             <id>repo</id>
             <url>https://repo.eclipse.org/content/groups/releases/</url>
         </repository>
-        <!--<repository>-->
-            <!--<id>opensourceagility-release</id>-->
-            <!--<url>http://repo.opensourceagility.com/release/</url>-->
-        <!--</repository>-->
-        <!--<repository>-->
-            <!--<id>maven</id>-->
-            <!--<url>https://mvnrepository.com</url>-->
-        <!--</repository>-->
     </repositories>
     <build>
         <plugins>
@@ -132,10 +142,6 @@
                 <directory>
                     src/main/resources
                 </directory>
-                <includes>
-                    <include>templates/**</include>
-                    <include>*</include>
-                </includes>
                 <filtering>true</filtering>
             </resource>
         </resources>
