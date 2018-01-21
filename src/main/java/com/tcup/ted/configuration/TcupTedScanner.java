@@ -2,13 +2,19 @@ package com.tcup.ted.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.Gson;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 @Configuration
@@ -19,6 +25,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 @EnableMongoRepositories(basePackages = {"com.tcup.ted.db.repositories",
         "com.tcup.ted.services.companies.repositories"})
 public class TcupTedScanner{
+
+    @Bean
+    @ConditionalOnMissingBean
+    public GsonHttpMessageConverter gsonHttpMessageConverter(Gson gson) {
+        GsonHttpMessageConverter converter = new GsonHttpMessageConverter();
+        converter.setGson(gson);
+        return converter;
+    }
 
     @Bean
     public GitHubClient getGitHubClient(@Value("${github.access.token}") String token){

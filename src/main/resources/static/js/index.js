@@ -20,8 +20,23 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                  controller: 'company',
                  controllerAs: 'companyCtl',
                  templateUrl: '/views/company.html'
-         }
+          }
+        },
+        params: {
+           companies: null
         }
-
+  }).
+  state('company.project', {
+       url: '/:project',
+       views: {
+         'content@': {
+              controller: 'project',
+              controllerAs: 'projectCtl',
+              templateUrl: '/views/project.html'
+         }
+       },
+       params: {
+          project: null
+       }
   })
 }]);

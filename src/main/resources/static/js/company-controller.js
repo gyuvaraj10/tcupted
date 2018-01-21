@@ -2,19 +2,7 @@ var app = angular.module('tcupted');
 app.controller('company', ['$scope','$http', '$state','$stateParams', function($scope, $http,$state,$stateParams) {
 
     $scope.iscreateCompany = true;
-
-    $http.get('/company/getAll').then(function(data){
-      $scope.companies = []
-      data.data.forEach(function(item){
-        $scope.companies.push({
-           name: item.name,
-           email: item.email
-        });
-      });
-    }).catch(function(error) {
-        console.log(error);
-    })
-
+    $scope.companies = $stateParams.companies;
 
     $scope.createCompany = function() {
         let companyName = $scope.companyName;

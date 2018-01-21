@@ -1,8 +1,10 @@
 package com.tcup.ted.services.companies.model;
 
-import java.util.Arrays;
 
-public class TcupProject {
+import java.io.Serializable;
+
+
+public class TcupProject implements Serializable {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
@@ -16,6 +18,5 @@ public class TcupProject {
     private String description;
 
     public TcupProject() {
-
     }
 }
