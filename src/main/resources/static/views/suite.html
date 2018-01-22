@@ -1,3 +1,34 @@
 <div ng-controller="testsuite">
-
+    <div class="container">
+        <button type="button" class="btn btn-success" ng-click="showCreateTestButton()">Create Tests</button>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Test Name</th>
+                <th scope="col">Test Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="test in tests">
+                <td scope="row">{{$index}}</td>
+                <td><a ui-sref="company.project.suite.test({testName: test.testName})">{{test.testName}}</a></td>
+                <td><a ui-sref="company.project.suite.test({testName: test.testName})">{{test.testDescription}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div ng-hide="hideCreateTestButton">
+            <form ng-submit="createTest()">
+                <div class="form-group">
+                    <label for="testCaseName">Test Case/Test Script Name</label>
+                    <input type="text" ng-model="testCaseName" class="form-control" id="testCaseName">
+                </div>
+                <div class="form-group">
+                    <label for="testCaseDescription">TestSuite Description</label>
+                    <input type="text" ng-model="testCaseDescription" class="form-control" id="testCaseDescription">
+                </div>
+                <button type="submit" class="btn btn-primary" id="createTest" value="Submit">Create</button>
+            </form>
+        </div>
+    </div>
 </div>

@@ -2,7 +2,27 @@ var app = angular.module('tcupted');
 app.controller('company', ['$scope','$http', '$state','$stateParams', function($scope, $http,$state,$stateParams) {
 
     $scope.iscreateCompany = true;
-    $scope.companies = $stateParams.companies;
+    console.log('company controller');
+
+    if($stateParams.companies == null){
+        $http.get('/company/getAll').then(function(data){
+                var companies = []
+                console.log('entered');
+                data.data.forEach(function(item){
+                  companies.push({
+                     name: item.name,
+                     email: item.email,
+                     projects: item.projectList
+                  });
+                });
+           $scope.companies = companies;
+        }).catch(function(error){
+            console.log(error);
+        })
+    } else {
+        $scope.companies = $stateParams.companies;
+    }
+
 
     $scope.createCompany = function() {
         let companyName = $scope.companyName;
@@ -25,7 +45,6 @@ app.controller('company', ['$scope','$http', '$state','$stateParams', function($
                 inherit: false,
                 notify: true
             });
-
         }).catch(function(error) {
             console.log(error);
         });

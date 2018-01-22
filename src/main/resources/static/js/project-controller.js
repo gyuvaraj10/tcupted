@@ -3,6 +3,7 @@ app.controller('project', ['$scope','$http', '$state','$stateParams', function($
 
     $scope.isTestSuiteCreated = true;
     var project = $stateParams.project;
+    $scope.project = project;
     console.log('project name is');
     console.log($stateParams.project);
 
@@ -11,7 +12,7 @@ app.controller('project', ['$scope','$http', '$state','$stateParams', function($
       data.data.forEach(function(item){
         $scope.suites.push({
            name: item.testSuiteName,
-           email: item.testSuiteDescription
+           description: item.testSuiteDescription
         });
       });
     }).catch(function(error) {
@@ -22,7 +23,11 @@ app.controller('project', ['$scope','$http', '$state','$stateParams', function($
         let name = $scope.testSuiteName;
         let description = $scope.testSuiteDescription;
 
-        $http.post('/suite/create/'+project+"/"+ name, {params: {description: description}}).then(function(data) {
+        $http({
+                method:'POST',
+                url: '/suite/create/'+project+"/"+ name,
+                params: {description: description}
+            }).then(function(data) {
             $state.transitionTo($state.current, $stateParams, {
                 reload: true,
                 inherit: false,

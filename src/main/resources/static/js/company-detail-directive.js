@@ -4,16 +4,20 @@ app.directive('companyDetail', function(){
     function link(scope) {
         scope.projects = []
         let companies = scope.companies;
-        companies.forEach(function(company){
-            var proj = {
-                name: company.name,
-                email: company.email,
-            }
-            company.projects.forEach(function(projectItem){
-                proj.projectName = projectItem.projectName;
-                scope.projects.push(proj);
-            })
-        });
+        if(companies!=null && companies.length > 0) {
+            companies.forEach(function(company){
+                var proj = {
+                    name: company.name,
+                    email: company.email,
+                }
+                if(angular.isDefined(company.projects)) {
+                    company.projects.forEach(function(projectItem){
+                        proj.projectName = projectItem.projectName;
+                        scope.projects.push(proj);
+                    })
+                }
+            });
+        }
     }
 
     return {
