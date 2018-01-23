@@ -31,37 +31,42 @@ public class PageController {
 
     private static Logger logger = LoggerFactory.getLogger(PageController.class);
 
+    @GetMapping("/{project}/{name}/all")
+    public List<Pages> getPageElements(@PathVariable String project, @PathVariable String pageName) {
+        return pageRepository.findAllPagesByPageNameAndProjectName(pageName, project);
+    }
+
     @PostMapping("/create/{project}/{name}")
-    public void createPage(@PathVariable String project, @PathVariable String name, HttpEntity<List<ElementField>> entity){
+    public void createPage(@PathVariable String project, @PathVariable String pageName, HttpEntity<List<ElementField>> entity){
         try {
-            String content = provider.getObject().generatePageObject(name, entity.getBody());
+            String content = provider.getObject().generatePageObject(pageName, entity.getBody());
             String gitContent = Base64Utils.encodeToUrlSafeString(content.getBytes());
-            gitHubService.createAFile(project, name, gitContent);
+            gitHubService.createAFile(project, pageName, gitContent);
             ElementField field = entity.getBody().get(0);
-            Pages pages = new Pages("1",name, field.getIdentifier(), field.getValue(), field.getName());
+            Pages pages = new Pages(pageName, field.getIdentifier(), field.getValue(), field.getName(), project);
             pageRepository.save(pages);
             logger.info("Successfully saved the Page into the Database");
         } catch (Exception ex){
             logger.error("There is a problem creating the page {}", ex.getMessage());
         }
     }
-
-    @PutMapping("/update/{name}")
-    public void updatePage(@PathVariable String name, HttpEntity<List<ElementField>> entity) {
-        try {
-            String content = provider.getObject().generatePageObject(name, entity.getBody());
-            File file = new File("/Users/Yuvaraj/dev/mytoold/tcupted/src/main/resources/" + name + ".java");
-            FileUtils.writeStringToFile(file, content, "UTF-8");
-            String gitContent = Base64Utils.encodeToUrlSafeString(FileUtils.readFileToString(file, "UTF-8").getBytes());
-            gitHubService.updateAFile("yuvaraj", name+".java", gitContent);
-            ElementField field = entity.getBody().get(0);
-            Pages pages = new Pages("1",name, field.getIdentifier(), field.getValue(), field.getName());
-            pageRepository.save(pages);
-            logger.info("Successfully saved the Page into the Database");
-        } catch (Exception ex){
-            logger.error("There is a problem updating the page {}", ex.getMessage());
-        }
-    }
+//
+//    @PutMapping("/update/{name}")
+//    public void updatePage(@PathVariable String name, HttpEntity<List<ElementField>> entity) {
+//        try {
+//            String content = provider.getObject().generatePageObject(name, entity.getBody());
+//            File file = new File("/Users/Yuvaraj/dev/mytoold/tcupted/src/main/resources/" + name + ".java");
+//            FileUtils.writeStringToFile(file, content, "UTF-8");
+//            String gitContent = Base64Utils.encodeToUrlSafeString(FileUtils.readFileToString(file, "UTF-8").getBytes());
+//            gitHubService.updateAFile("yuvaraj", name+".java", gitContent);
+//            ElementField field = entity.getBody().get(0);
+//            Pages pages = new Pages(name, field.getIdentifier(), field.getValue(), field.getName());
+//            pageRepository.save(pages);
+//            logger.info("Successfully saved the Page into the Database");
+//        } catch (Exception ex){
+//            logger.error("There is a problem updating the page {}", ex.getMessage());
+//        }
+//    }
 
 
     @DeleteMapping("/delete/{name}")

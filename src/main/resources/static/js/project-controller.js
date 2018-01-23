@@ -38,7 +38,6 @@ app.controller('project', ['$scope','$http', '$state','$stateParams', function($
             console.log(error);
         });
     }
-
     $scope.showCreateTestSuite = function() {
         $scope.isTestSuiteCreated = false;
     };

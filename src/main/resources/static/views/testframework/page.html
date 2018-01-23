@@ -1,7 +1,43 @@
 <div ng-controller="page">
     <div class="container">
-        <button type="button" class="btn btn-success" ng-click="addPageElement()">Create Page Element</button>
-
-        <div id="grid1" ui-grid="gridOpts" class="grid"></div>
+        <table class="table table-bordered table-hover table-condensed">
+            <tr style="font-weight: bold">
+                <td style="width:35%">Element Name</td>
+                <td style="width:20%">Element Identifier</td>
+                <td style="width:20%">Element Identifer Value</td>
+            </tr>
+            <tr ng-repeat="element in elements">
+                <td>
+                    <span editable-text="element.elementName" e-name="Element Name" e-form="rowform" onbeforesave="checkName($data, user.id)">
+                        {{ element.elementName}}
+                    </span>
+                </td>
+                <td>
+                    <span editable-text="element.identifier" e-name="Element Identifier" e-form="rowform">
+                        {{ element.identifier }}
+                    </span>
+                </td>
+                <td>
+                    <span editable-text="element.identifierValue" e-name="Element Identifier Value" e-form="rowform">
+                        {{ element.identifierValue}}
+                    </span>
+                </td>
+                <td style="white-space: nowrap">
+                    <form editable-form name="rowform" onbeforesave="saveElement($data, element.elementName)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == element">
+                        <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+                            save
+                        </button>
+                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+                            cancel
+                        </button>
+                    </form>
+                    <div class="buttons" ng-show="!rowform.$visible">
+                        <button type="button" class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+                        <button type="button" class="btn btn-danger" ng-click="removeElement($index)">del</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button type="button" class="btn btn-default" ng-click="addPageElement()">Create Page Element</button>
     </div>
 </div>

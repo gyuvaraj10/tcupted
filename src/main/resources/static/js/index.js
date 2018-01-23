@@ -1,4 +1,4 @@
-var app = angular.module('tcupted', ['ui.router','ngRoute','ui.grid']);
+var app = angular.module('tcupted', ['ui.router','ngRoute','xeditable']);
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
  'use strict';
   $urlRouterProvider.otherwise('/home');
@@ -72,11 +72,12 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 'content@': {
                     controller: 'page',
                     controllerAs: 'pageCtl',
-                    templateUrl: '/views/page.html'
+                    templateUrl: '/views/testframework/page.html'
                 }
             },
             params: {
-                page: null
+                page: null,
+                project: null
             }
     });
 }]);

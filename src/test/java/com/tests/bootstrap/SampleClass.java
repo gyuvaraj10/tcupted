@@ -25,8 +25,60 @@ public class SampleClass {
 
     @Test
     public void test() {
-        driver = 10;
+        //script to delete the jobs until n-4
+//        def j = Jenkins.instance
+//        def ivtSanityView = j.getView('Project IVT and Sanity')
+//        def currentRelease= 308
+//        def expectedReleaseToKeepUntil = currentRelease-3;
+//        ivtSanityView.views.each {   view ->
+//                def name = view.name
+//                def releaseNumber = name.split("R")[1].split(" ")[0].split("a")[0]
+//                if(Integer.valueOf(releaseNumber) < expectedReleaseToKeepUntil) {
+//                    view.items.each { v ->
+//                        def jobs = v.items
+//                            jobs.each { job->
+//                                job.delete()
+//                        }
+//                    }
+//                }
+//        }
 
+    //script to delete the jobs from Sanity Suite until  n-4
+//        def j = Jenkins.instance
+//        def ivtSanityView = j.getView('Sanity Suite')
+//        def currentRelease= 308
+//        def expectedReleaseToKeepUntil = currentRelease-3;
+//        ivtSanityView.views.each {   view ->
+//                def name = view.name
+//            def releaseNumber = name.split("R")[1].split(" ")[0].split("a")[0]
+//            if(Integer.valueOf(releaseNumber) < expectedReleaseToKeepUntil) {
+//                view.items.each { v ->
+//                    if(v instanceof hudson.model.FreeStyleProject) {
+//                        v.delete()
+//                    }
+//                }
+//            }
+//        }
+
+
+//        def j = Jenkins.instance
+//        def jobs = j.items
+//        jobs.each { job->
+//            if(!(job instanceof com.cloudbees.hudson.plugins.folder.Folder)){
+//                def displayName = job.name;
+//                def lastBuild = job.lastBuild;
+//                if(lastBuild !=null) {
+//                    println(job.name+"," +job.lastBuild.getTime())
+//                } else {
+//                    println(job.name+"," +job.lastBuild)
+//                }
+//            }
+//        }
+
+
+        driver = 10;
+        String name = "R289 Project Green Build";
+        System.out.println(name.trim());
 
 
     }

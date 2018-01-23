@@ -15,6 +15,15 @@ public class TcupProject implements Serializable {
     }
 
     private String projectName;
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     private String description;
 
     public TcupProject() {

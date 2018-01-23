@@ -8,15 +8,27 @@ import org.springframework.util.concurrent.ListenableFuture;
  */
 public interface IGitService {
 
-    ListenableFuture<Repository> createProject(String projectName) throws Exception;
+//    ListenableFuture<Repository> createProject(String projectName) throws Exception;
+//
+//    ListenableFuture<Boolean> importProject(String projectName) throws Exception;
+//
+//    ListenableFuture<Boolean> deleteProject(String projectName) throws Exception;
+//
+//    ListenableFuture<Boolean> createAFile(String projectName, String filePath, String content) throws Exception;
+//
+//    ListenableFuture<Boolean> updateAFile(String projectName, String filePath, String content) throws Exception;
+//
+//    ListenableFuture<Boolean> getFile(String projectName, String filePath) throws Exception;
 
-    ListenableFuture<Boolean> importProject(String projectName) throws Exception;
+    Repository createProject(String projectName) throws Exception;
 
-    ListenableFuture<Boolean> deleteProject(String projectName) throws Exception;
+    Boolean importProject(String projectName) throws Exception;
 
-    ListenableFuture<Boolean> createAFile(String projectName, String filePath, String content) throws Exception;
+    Boolean deleteProject(String projectName) throws Exception;
 
-    ListenableFuture<Boolean> updateAFile(String projectName, String filePath, String content) throws Exception;
+    Boolean createAFile(String projectName, String filePath, String content) throws Exception;
 
-    ListenableFuture<Boolean> getFile(String projectName, String filePath) throws Exception;
+    Boolean updateAFile(String projectName, String filePath, String content) throws Exception;
+
+    Boolean getFile(String projectName, String filePath) throws Exception;
 }

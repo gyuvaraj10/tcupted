@@ -17,12 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,8 +57,7 @@ public class GitHubService implements IGitService{
     private static Logger log4JLogger = LoggerFactory.getLogger(SeleniumPOGenerator.class);
 
     @Override
-    @Async
-    public ListenableFuture<Repository> createProject(String projectName) throws Exception {
+    public Repository createProject(String projectName) throws Exception {
         Repository object = null;
         try {
             Repository repository = new Repository();
@@ -74,11 +68,11 @@ public class GitHubService implements IGitService{
         catch (RequestException ex){
             log4JLogger.error(ex.getMessage());
         }
-        return new AsyncResult<>(object);
+        return object;
     }
 
     @Override
-    public ListenableFuture<Boolean> importProject(String projectName) throws Exception {
+    public Boolean importProject(String projectName) throws Exception {
         Repository object = null;
         try {
             ImportProject project = ImportProject.Builder.importProject()
@@ -89,31 +83,29 @@ public class GitHubService implements IGitService{
                     .build();
             object = gitHubClient.put(format("/repos/%s/%s/import", owner,projectName), project, Repository.class);
             log4JLogger.info("Successfully Created A Repository for project:\n{}", getGson().toJson(object));
-            return new AsyncResult<>(Boolean.TRUE);
+            return Boolean.TRUE;
         }
         catch (RequestException ex){
             //Do Nothing
-            return new AsyncResult<>(Boolean.FALSE);
+            return Boolean.FALSE;
         }
     }
 
     @Override
-    @Async
-    public ListenableFuture<Boolean> deleteProject(String projectName) throws Exception {
+    public Boolean deleteProject(String projectName) throws Exception {
         try {
             gitHubClient.delete(format("/repos/%s/%s",owner, projectName));
             log4JLogger.info("Deleting the Project {}", projectName);
-            return new AsyncResult<>(Boolean.TRUE);
+            return Boolean.TRUE;
         }
         catch (Exception ex){
             log4JLogger.error("Failed to delete the Project due to {}", ex.getMessage());
-            return new AsyncResult<>(Boolean.FALSE);
+            return Boolean.FALSE;
         }
     }
 
     @Override
-    @Async
-    public ListenableFuture<Boolean> createAFile(String projectName, String filePath, String content) throws Exception {
+    public Boolean createAFile(String projectName, String filePath, String content) throws Exception {
         try{
             Commit commit = Commit.Builder.commit()
                     .withContent(content)
@@ -122,17 +114,17 @@ public class GitHubService implements IGitService{
             filePath = pagePath+"/"+filePath+".java";
             gitHubClient.put(format("/repos/%s/%s/contents/%s", owner, projectName, filePath), commit, Object.class);
             log4JLogger.info("Created A Page Class");
-            return new AsyncResult<>(Boolean.TRUE);
+            return Boolean.TRUE;
         }
         catch (Exception ex) {
             log4JLogger.error("Failed to create a file due to {}", ex.getMessage());
             //return this error as an error response
-            return new AsyncResult<>(Boolean.FALSE);
+            return Boolean.FALSE;
         }
     }
 
     @Override
-    public ListenableFuture<Boolean> updateAFile(String projectName, String filePath, String content) throws Exception {
+    public Boolean updateAFile(String projectName, String filePath, String content) throws Exception {
         try{
             String sha = getFileSHA(projectName, filePath);
             Commit commit = Commit.Builder.commit()
@@ -142,27 +134,133 @@ public class GitHubService implements IGitService{
                     .build();
             gitHubClient.put(format("/repos/%s/%s/contents/%s", owner, projectName, filePath), commit, Object.class);
             log4JLogger.info("Created A Page Class");
-            return new AsyncResult<>(Boolean.TRUE);
+            return Boolean.TRUE;
         }
         catch (Exception ex) {
             log4JLogger.error("Failed to create a file due to {}", ex.getMessage());
             //return this error as an error response
-            return new AsyncResult<>(Boolean.FALSE);
+            return Boolean.FALSE;
         }
     }
 
     @Override
-    public ListenableFuture<Boolean> getFile(String projectName, String filePath) throws Exception {
+    public Boolean getFile(String projectName, String filePath) throws Exception {
         try{
             log4JLogger.info("Created A Page Class");
-            return new AsyncResult<>(Boolean.TRUE);
+            return Boolean.TRUE;
         }
         catch (Exception ex) {
             log4JLogger.error("Failed to create a file due to {}", ex.getMessage());
             //return this error as an error response
-            return new AsyncResult<>(Boolean.FALSE);
+            return Boolean.FALSE;
         }
     }
+//
+//    @Override
+//    @Async
+//    public ListenableFuture<Repository> createProject(String projectName) throws Exception {
+//        Repository object = null;
+//        try {
+//            Repository repository = new Repository();
+//            repository.setName(projectName);
+//            object = service.createRepository(repository);
+//            log4JLogger.info("Successfully Created A Repository for project:\n{}", getGson().toJson(object));
+//        }
+//        catch (RequestException ex){
+//            log4JLogger.error(ex.getMessage());
+//        }
+//        return new AsyncResult<>(object);
+//    }
+//
+//    @Override
+//    @Async
+//    public ListenableFuture<Boolean> importProject(String projectName) throws Exception {
+//        Repository object = null;
+//        try {
+//            ImportProject project = ImportProject.Builder.importProject()
+//                    .withVcs(vcsName)
+//                    .withVcs_password(password)
+//                    .withVcs_username(owner)
+//                    .withVcs_url(format ("https://github.com/%s/%s",owner, repoName))
+//                    .build();
+//            object = gitHubClient.put(format("/repos/%s/%s/import", owner,projectName), project, Repository.class);
+//            log4JLogger.info("Successfully Created A Repository for project:\n{}", getGson().toJson(object));
+//            return new AsyncResult<>(Boolean.TRUE);
+//        }
+//        catch (RequestException ex){
+//            //Do Nothing
+//            return new AsyncResult<>(Boolean.FALSE);
+//        }
+//    }
+//
+//    @Override
+//    @Async
+//    public ListenableFuture<Boolean> deleteProject(String projectName) throws Exception {
+//        try {
+//            gitHubClient.delete(format("/repos/%s/%s",owner, projectName));
+//            log4JLogger.info("Deleting the Project {}", projectName);
+//            return new AsyncResult<>(Boolean.TRUE);
+//        }
+//        catch (Exception ex){
+//            log4JLogger.error("Failed to delete the Project due to {}", ex.getMessage());
+//            return new AsyncResult<>(Boolean.FALSE);
+//        }
+//    }
+//
+//    @Override
+//    @Async
+//    public ListenableFuture<Boolean> createAFile(String projectName, String filePath, String content) throws Exception {
+//        try{
+//            Commit commit = Commit.Builder.commit()
+//                    .withContent(content)
+//                    .withMessage("Creating the page class")
+//                    .build();
+//            filePath = pagePath+"/"+filePath+".java";
+//            gitHubClient.put(format("/repos/%s/%s/contents/%s", owner, projectName, filePath), commit, Object.class);
+//            log4JLogger.info("Created A Page Class");
+//            return new AsyncResult<>(Boolean.TRUE);
+//        }
+//        catch (Exception ex) {
+//            log4JLogger.error("Failed to create a file due to {}", ex.getMessage());
+//            //return this error as an error response
+//            return new AsyncResult<>(Boolean.FALSE);
+//        }
+//    }
+//
+//    @Override
+//    @Async
+//    public ListenableFuture<Boolean> updateAFile(String projectName, String filePath, String content) throws Exception {
+//        try{
+//            String sha = getFileSHA(projectName, filePath);
+//            Commit commit = Commit.Builder.commit()
+//                    .withContent(content)
+//                    .withMessage("Updating the page class")
+//                    .withSHA(sha)
+//                    .build();
+//            gitHubClient.put(format("/repos/%s/%s/contents/%s", owner, projectName, filePath), commit, Object.class);
+//            log4JLogger.info("Created A Page Class");
+//            return new AsyncResult<>(Boolean.TRUE);
+//        }
+//        catch (Exception ex) {
+//            log4JLogger.error("Failed to create a file due to {}", ex.getMessage());
+//            //return this error as an error response
+//            return new AsyncResult<>(Boolean.FALSE);
+//        }
+//    }
+//
+//    @Override
+//    @Async
+//    public ListenableFuture<Boolean> getFile(String projectName, String filePath) throws Exception {
+//        try{
+//            log4JLogger.info("Created A Page Class");
+//            return new AsyncResult<>(Boolean.TRUE);
+//        }
+//        catch (Exception ex) {
+//            log4JLogger.error("Failed to create a file due to {}", ex.getMessage());
+//            //return this error as an error response
+//            return new AsyncResult<>(Boolean.FALSE);
+//        }
+//    }
 
     public String getFileSHA(String projectName, String filePath) throws Exception {
         try{

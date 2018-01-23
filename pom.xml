@@ -111,11 +111,11 @@
             <version>1.0.3</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>angular-ui-grid</artifactId>
-            <version>4.2.1</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.webjars.bower</groupId>-->
+            <!--<artifactId>angular-xeditable</artifactId>-->
+            <!--<version>0.7.1</version>-->
+        <!--</dependency>-->
     </dependencies>
     <repositories>
         <repository>
@@ -126,6 +126,10 @@
         <repository>
             <id>repo</id>
             <url>https://repo.eclipse.org/content/groups/releases/</url>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
     </repositories>
     <build>
