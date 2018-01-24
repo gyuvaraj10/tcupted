@@ -1,0 +1,5 @@
+
+#foreach($f in $fields)
+   @FindBy($f.getIdentifier() = "$f.getValue()")
+   private WebElement $f.getName();
+#end

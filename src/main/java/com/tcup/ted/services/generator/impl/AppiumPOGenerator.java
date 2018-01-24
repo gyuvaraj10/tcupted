@@ -10,7 +10,12 @@ import java.util.List;
 public class AppiumPOGenerator implements IPageObjectGenerator {
 
     @Override
-    public String generatePageObject(String pageName, List<ElementField> elementFieldList) throws Exception {
+    public String generatePageObject(String pageName, List<ElementField> elementFieldList) {
+        return null;
+    }
+
+    @Override
+    public String generatePageElements(String pageName, List<ElementField> elementField) {
         return null;
     }
 }

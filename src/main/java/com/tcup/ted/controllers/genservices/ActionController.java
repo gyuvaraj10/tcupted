@@ -9,8 +9,9 @@ import java.util.List;
 @RestController("/actions")
 public class ActionController {
 
-    @PostMapping("/create/{page}")
-    public void createPageAction(@PathVariable String page, HttpEntity<List<PageAction>> entity) {
+    @PostMapping("/{projectName}/{pageName}")
+    public void createPageAction(@PathVariable String projectName, @PathVariable String pageName,
+                                 HttpEntity<List<PageAction>> entity) {
         try {
             //TODO implement code to put the page actions
         } catch (Exception ex) {

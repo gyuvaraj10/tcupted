@@ -4,8 +4,10 @@ public enum UIEvent {
 
     CLICK("click"),
     SELECT("select"),
-    DRAGDROP("dragDrop"),
-    HOVER("hover");
+    DRAG_DROP("dragDrop"),
+    HOVER("hover"),
+    DOUBLE_CLICK("doubleClick");
+
 
     public String getEvent() {
         return event;

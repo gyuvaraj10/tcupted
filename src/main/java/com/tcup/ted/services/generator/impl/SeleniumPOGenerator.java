@@ -22,13 +22,26 @@ public class SeleniumPOGenerator implements IPageObjectGenerator{
     @Value("${selenium.template.path}")
     private String seleniumTemplatePath;
 
+    @Value("${selenium.element.template.path}")
+    private String seleniumElementTemplatePath;
+
     private static Logger log4JLogger = LoggerFactory.getLogger(SeleniumPOGenerator.class);
 
     @Override
-    public String generatePageObject(String pageName, List<ElementField> elementFields) throws Exception{
+    public String generatePageObject(String pageName, List<ElementField> elementFields) {
         util.load(seleniumTemplatePath);
         util.put("pageclass", pageName);
         util.put("fields", elementFields);
+        util.fillTemplate();
+        String filledTemplate = util.getFilledTemplate();
+        log4JLogger.info("The Filled Template is \n {}", filledTemplate);
+        return filledTemplate;
+    }
+
+    @Override
+    public String generatePageElements(String pageName, List<ElementField> elementField) {
+        util.load(seleniumElementTemplatePath);
+        util.put("fields", elementField);
         util.fillTemplate();
         String filledTemplate = util.getFilledTemplate();
         log4JLogger.info("The Filled Template is \n {}", filledTemplate);

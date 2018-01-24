@@ -27,7 +27,7 @@ public class TemplateUtil {
         writer = new StringWriter();
     }
 
-    public void load(String filePath) throws Exception {
+    public void load(String filePath) {
         engine.init(getProperties());
         template = engine.getTemplate(filePath);
     }
@@ -35,7 +35,7 @@ public class TemplateUtil {
         context.put(templateKey, templateValue);
     }
 
-    public void fillTemplate() throws IOException {
+    public void fillTemplate() {
         template.merge(context, writer);
     }
 

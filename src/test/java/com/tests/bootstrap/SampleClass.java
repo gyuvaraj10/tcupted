@@ -3,28 +3,26 @@ package com.tests.bootstrap;
 import com.google.gson.Gson;
 import com.tcup.ted.services.companies.model.TcupCompany;
 import com.tcup.ted.services.companies.model.TcupProject;
+import org.apache.http.client.utils.DateUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Yuvaraj on 20/01/2018.
  */
 public class SampleClass {
 
-    int  driver;
-
-    @Before
-    public void setup() {
-        System.out.println("Start");
-    }
-
     @Test
     public void test() {
+
+        Date today = new Date();
+        Calendar c = Calendar.getInstance();
+        c.set(2017,0,1);
+        System.out.println(c.getTime().toString());
+//        System.out.println(today.toString());
         //script to delete the jobs until n-4
 //        def j = Jenkins.instance
 //        def ivtSanityView = j.getView('Project IVT and Sanity')
@@ -75,16 +73,5 @@ public class SampleClass {
 //            }
 //        }
 
-
-        driver = 10;
-        String name = "R289 Project Green Build";
-        System.out.println(name.trim());
-
-
-    }
-
-    @After
-    public void cleanUp() {
-        System.out.println(driver);
     }
 }

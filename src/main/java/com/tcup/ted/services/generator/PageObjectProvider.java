@@ -22,7 +22,7 @@ public class PageObjectProvider implements FactoryBean<IPageObjectGenerator>, Ap
     private static Logger log4JLogger = LoggerFactory.getLogger(PageObjectProvider.class);
 
     @Override
-    public IPageObjectGenerator getObject() throws Exception {
+    public IPageObjectGenerator getObject() {
         log4JLogger.info("Requested the PageObject For {} Tool", toolName);
         IPageObjectGenerator pageObjectGenerator;
         switch (toolName.toLowerCase()) {
