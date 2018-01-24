@@ -10,6 +10,7 @@ public class Element {
     @Id
     private String id;
     private String identifier;
+    private boolean listType;
     private String value;
     private String code;
     private String name;
@@ -17,7 +18,6 @@ public class Element {
     private String pageName;
 
     public Element() {
-
     }
 
     public Element(String identifier, String value, String code, String name, String projectName, String pageName) {
@@ -27,6 +27,14 @@ public class Element {
         this.code = code;
         this.projectName = projectName;
         this.pageName = pageName;
+    }
+
+    public boolean isListType() {
+        return listType;
+    }
+
+    public void setListType(boolean listType) {
+        this.listType = listType;
     }
 
     public String getId() {

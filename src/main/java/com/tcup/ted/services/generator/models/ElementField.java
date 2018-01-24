@@ -1,18 +1,24 @@
 package com.tcup.ted.services.generator.models;
 
 public class ElementField {
+
     private String name;
+    private boolean listType;
     private String identifier;
     private String value;
 
     public ElementField(){
-
     }
 
-    private ElementField(String name, String identifier, String value){
+    private ElementField(String name, String identifier, String value, boolean listType){
         this.name = name;
         this.identifier = identifier;
         this.value = value;
+        this.listType = listType;
+    }
+
+    public boolean isListType() {
+        return listType;
     }
 
     public String getName() {
@@ -31,6 +37,7 @@ public class ElementField {
         private String name;
         private String identifier;
         private String value;
+        private boolean listType;
 
         private Builder() {
         }
@@ -41,6 +48,11 @@ public class ElementField {
 
         public Builder withName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public Builder withListType(boolean listType) {
+            this.listType = listType;
             return this;
         }
 
@@ -55,7 +67,7 @@ public class ElementField {
         }
 
         public ElementField build() {
-            return new ElementField(name, identifier, value);
+            return new ElementField(name, identifier, value, listType);
         }
     }
 }

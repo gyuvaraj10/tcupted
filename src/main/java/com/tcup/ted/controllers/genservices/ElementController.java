@@ -36,16 +36,16 @@ public class ElementController {
     public ResponseEntity<List<Element>> createElements(@PathVariable String projectName, @PathVariable String pageName,
                                         HttpEntity<List<ElementField>> entity) {
         List<ElementField> elementFields = entity.getBody();
-        String code = provider.getObject().generatePageElements(pageName, elementFields);
         List<Element> elements = new ArrayList<>();
         elementFields.forEach(x->{
             Element element = new Element();
             element.setName(x.getName());
             element.setIdentifier(x.getIdentifier());
             element.setValue(x.getValue());
-            element.setCode(code);
+            element.setCode(provider.getObject().generatePageElements(pageName, Arrays.asList(x)));
             element.setProjectName(projectName);
             element.setPageName(pageName);
+            element.setListType(x.isListType());
             elements.add(element);
         });
         List<Element> insertedElements = elementRepository.insert(elements);
@@ -60,16 +60,17 @@ public class ElementController {
         List<Element> mongoElements = elementRepository.findByProjectNameAndPageName(projectName, pageName);
         List<Element> elementsToUpsert = new ArrayList<>();
         for(ElementField requestElement: requestElements) {
-            String code = provider.getObject().generatePageElements(pageName, Arrays.asList(requestElement));
             String elementName = requestElement.getName();
             Optional<Element> elementOptional = mongoElements.stream().filter(x->x.getName().equals(elementName)).findFirst();
             if(elementOptional.isPresent()) {
                 Element mongoElement = elementOptional.get();
                 if(!(mongoElement.getIdentifier().equals(requestElement.getIdentifier())
-                        && mongoElement.getValue().equals(requestElement.getValue()))){
+                        && mongoElement.getValue().equals(requestElement.getValue())
+                        && mongoElement.isListType()== requestElement.isListType())){
                     mongoElement.setValue(requestElement.getValue());
                     mongoElement.setIdentifier(requestElement.getIdentifier());
-                    mongoElement.setCode(code);
+                    mongoElement.setListType(requestElement.isListType());
+                    mongoElement.setCode(provider.getObject().generatePageElements(pageName, Arrays.asList(requestElement)));
                 }
                 elementsToUpsert.add(elementOptional.get());
             } else {
@@ -77,9 +78,10 @@ public class ElementController {
                 element.setName(requestElement.getName());
                 element.setIdentifier(requestElement.getIdentifier());
                 element.setValue(requestElement.getValue());
-                element.setCode(code);
+                element.setCode(provider.getObject().generatePageElements(pageName, Arrays.asList(requestElement)));
                 element.setProjectName(projectName);
                 element.setPageName(pageName);
+                element.setListType(requestElement.isListType());
                 elementsToUpsert.add(element);
             }
         }

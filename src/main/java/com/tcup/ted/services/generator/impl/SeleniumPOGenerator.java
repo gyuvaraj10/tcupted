@@ -29,7 +29,7 @@ public class SeleniumPOGenerator implements IPageObjectGenerator{
 
     @Override
     public String generatePageObject(String pageName, List<ElementField> elementFields) {
-        util.load(seleniumTemplatePath);
+        util.load(seleniumElementTemplatePath);
         util.put("pageclass", pageName);
         util.put("fields", elementFields);
         util.fillTemplate();
